@@ -170,6 +170,7 @@ class GradeWindow(QWidget):
                 grade_val = int(grade.strip())
                 self.original_grades.append(grade_val)
                 self.corrected_grades.append(grade_val)
+        self.update_table()
         
 
 
