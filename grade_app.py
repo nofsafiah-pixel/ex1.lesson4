@@ -115,6 +115,7 @@ class GradeWindow(QWidget):
             self.selected_file = file_path
             self.selected_file_display.setText(file_path)
             self.selected_file_display.setToolTip(file_path)
+            self.make_table_out_of_file(file_path)
 
     def handle_correction_input(self) -> None:
         self.grade_correction_input.interpretText()
@@ -130,6 +131,25 @@ class GradeWindow(QWidget):
 
     def auto_open_file(self, file_path: str) -> bool:
         return QDesktopServices.openUrl(QUrl.fromLocalFile(file_path))
+
+    def make_table_out_of_file(self, file_path):
+        self.student_ids = []
+        self.original_grades = []
+        self.corrected_grades = []
+        if not file_path:
+            return
+
+        with open(self.selected_file, 'r') as f:
+            next(f)  
+            for line in f:
+                student_id, grade = line.strip().split(',')
+                self.student_ids.append(student_id.strip())
+                grade_val = int(grade.strip())
+                self.original_grades.append(grade_val)
+                self.corrected_grades.append(grade_val)
+        self.update_table()
+
+
 
 
 if __name__ == "__main__":
