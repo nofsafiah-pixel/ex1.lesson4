@@ -119,10 +119,34 @@ class GradeWindow(QWidget):
 
     def handle_correction_input(self) -> None:
         self.grade_correction_input.interpretText()
+        bonus = self.grade_correction_input.value()
+
+        self.corrected_grades = []
+        for orig_grade in self.original_grades:
+            corrected = min(100, orig_grade + bonus)
+            self.corrected_grades.append(corrected)
+
+
 
     def update_file(self) -> None:
-        """Placeholder for future file update and auto-open behavior."""
-        pass
+        if not self.selected_file:
+            return
+
+        with open(self.selected_file, "r") as f:
+            header = f.readline()
+
+        with open(self.selected_file, "w", newline="") as f:
+            if header:
+                f.write(header)
+            for student_id, corr_grade in zip(self.student_ids, self.corrected_grades):
+                f.write(f"{student_id},{corr_grade}\n")
+
+
+        self.original_grades = list(self.corrected_grades)
+        self.update_table()
+        self.auto_open_file(self.selected_file)
+        
+       
 
     def open_about(self) -> None:
         self.about_window.show()
