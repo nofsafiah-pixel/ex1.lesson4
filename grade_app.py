@@ -1,3 +1,9 @@
+from collections.abc import Iterable, Sequence
+from pathlib import Path
+
+from about import AboutWindow
+from PySide6.QtCore import QUrl
+from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QApplication,
     QFormLayout,
@@ -7,6 +13,7 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QPushButton,
     QTableWidget,
+    QTableWidgetItem,
     QVBoxLayout,
     QWidget,
 )
@@ -17,6 +24,7 @@ class GradeWindow(QWidget):
         super().__init__()
         self.setWindowTitle("מערכת ציונים")
         self.setMinimumSize(900, 820)
+        self.about_window = AboutWindow()
 
         title = QLabel("פרטי תלמיד")
         title.setObjectName("title")
@@ -54,6 +62,7 @@ class GradeWindow(QWidget):
 
         self.update_file_button = QPushButton("Update File")
         self.about_button = QPushButton("About")
+        self.about_button.clicked.connect(self.open_about)
         buttons = QHBoxLayout()
         buttons.addWidget(self.update_file_button)
         buttons.addWidget(self.about_button)
@@ -67,58 +76,30 @@ class GradeWindow(QWidget):
         layout.addWidget(self.grades_table, 1)
         layout.addLayout(buttons)
 
-        self.setStyleSheet(
-            """
-            QWidget {
-                background-color: #ffffff;
-                color: #263238;
-                font-family: "Segoe UI";
-                font-size: 14px;
-            }
-            QLabel#title {
-                color: #1f4e79;
-                font-size: 22px;
-                font-weight: 600;
-            }
-            QHeaderView::section {
-                background-color: #e8eef4;
-                color: #263238;
-                font-weight: 600;
-                padding: 6px;
-                border: 1px solid #cbd5e1;
-            }
-            QTableWidget {
-                background-color: #ffffff;
-                alternate-background-color: #f7f9fb;
-                gridline-color: #d8dee5;
-                border: 1px solid #cbd5e1;
-                selection-background-color: #dbeafe;
-            }
-            QLineEdit {
-                min-height: 34px;
-                padding: 4px 8px;
-                border: 1px solid #cbd5e1;
-                border-radius: 6px;
-                background-color: #ffffff;
-            }
-            QLineEdit:read-only {
-                background-color: lightgray;
-                color: #495057;
-            }
-            QPushButton {
-                min-height: 36px;
-                padding: 4px 14px;
-                border: none;
-                border-radius: 6px;
-                background-color: #1f4e79;
-                color: #ffffff;
-                font-weight: 600;
-            }
-            QPushButton:hover {
-                background-color: #286292;
-            }
-            """
-        )
+        stylesheet_path = Path(__file__).with_name("grade_app.qss")
+        self.setStyleSheet(stylesheet_path.read_text(encoding="utf-8"))
+
+    def update_table(self, rows: Iterable[Sequence[object]]) -> None:
+        rows = list(rows)
+        if len(rows) > self.grades_table.rowCount():
+            raise ValueError("Too many rows for the grades table.")
+        if any(len(row) != self.grades_table.columnCount() for row in rows):
+            raise ValueError("Each row must contain an ID and two grade values.")
+
+        self.grades_table.clearContents()
+        for row_index, values in enumerate(rows):
+            for column_index, value in enumerate(values):
+                self.grades_table.setItem(
+                    row_index, column_index, QTableWidgetItem(str(value))
+                )
+
+    def open_about(self) -> None:
+        self.about_window.show()
+        self.about_window.raise_()
+        self.about_window.activateWindow()
+
+    def auto_open_file(self, file_path: str) -> bool:
+        return QDesktopServices.openUrl(QUrl.fromLocalFile(file_path))
 
 
 if __name__ == "__main__":
