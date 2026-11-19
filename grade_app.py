@@ -38,9 +38,7 @@ class GradeWindow(QWidget):
         title.setObjectName("title")
 
         self.grade_correction_input = QSpinBox()
-        self.grade_correction_input.editingFinished.connect(
-            self.handle_correction_input
-        )
+        self.grade_correction_input.valueChanged.connect(self.handle_correction_input)
 
         self.selected_file_display = QLineEdit()
         self.selected_file_display.setReadOnly(True)
@@ -125,6 +123,7 @@ class GradeWindow(QWidget):
         for orig_grade in self.original_grades:
             corrected = min(100, orig_grade + bonus)
             self.corrected_grades.append(corrected)
+        self.update_table()
 
 
 
@@ -143,7 +142,7 @@ class GradeWindow(QWidget):
 
 
         self.original_grades = list(self.corrected_grades)
-        self.update_table()
+        
         self.auto_open_file(self.selected_file)
         
        
@@ -171,7 +170,7 @@ class GradeWindow(QWidget):
                 grade_val = int(grade.strip())
                 self.original_grades.append(grade_val)
                 self.corrected_grades.append(grade_val)
-        self.update_table()
+        
 
 
 

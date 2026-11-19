@@ -1,0 +1,63 @@
+QWidget {
+    background-color: #ffffff;
+    color: #263238;
+    font-family: "Segoe UI";
+    font-size: 14px;
+}
+
+QLabel#title {
+    color: #1f4e79;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+QHeaderView::section {
+    background-color: #e8eef4;
+    color: #263238;
+    font-weight: 600;
+    padding: 6px;
+    border: 1px solid #cbd5e1;
+}
+
+QTableWidget {
+    background-color: #ffffff;
+    alternate-background-color: #f7f9fb;
+    gridline-color: #d8dee5;
+    border: 1px solid #cbd5e1;
+    selection-background-color: #dbeafe;
+}
+
+QLineEdit {
+    min-height: 34px;
+    padding: 4px 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+}
+
+QSpinBox {
+    min-height: 34px;
+    padding: 4px 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+}
+
+QLineEdit:read-only {
+    background-color: lightgray;
+    color: #495057;
+}
+
+QPushButton {
+    min-height: 36px;
+    padding: 4px 14px;
+    border: none;
+    border-radius: 6px;
+    background-color: #1f4e79;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+QPushButton:hover {
+    background-color: #286292;
+}

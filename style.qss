@@ -1,0 +1,106 @@
+QMainWindow {
+    background-color: #f3f6fb;
+}
+
+QWidget {
+    color: #17233c;
+    font-family: "Segoe UI";
+    font-size: 13px;
+}
+
+#pageTitle {
+    color: #17233c;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+#pageSubtitle, #helperText {
+    color: #6b7890;
+    font-size: 13px;
+}
+
+#fileLabel {
+    color: #56647a;
+    font-size: 13px;
+}
+
+#card {
+    background-color: #ffffff;
+    border: 1px solid #e1e7f0;
+    border-radius: 14px;
+}
+
+#sectionTitle {
+    color: #17233c;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+QPushButton {
+    min-height: 42px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 9px;
+    font-weight: 600;
+}
+
+#secondaryButton {
+    background-color: #e8edf6;
+    color: #273853;
+}
+
+#secondaryButton:hover {
+    background-color: #dce5f2;
+}
+
+#primaryButton {
+    background-color: #315ee8;
+    color: #ffffff;
+}
+
+#primaryButton:hover {
+    background-color: #254dcc;
+}
+
+#primaryButton:pressed, #secondaryButton:pressed {
+    padding-top: 2px;
+}
+
+QSpinBox {
+    min-height: 40px;
+    padding: 0 10px;
+    background-color: #f8faff;
+    border: 1px solid #cbd5e4;
+    border-radius: 8px;
+    color: #17233c;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+QSpinBox:focus {
+    border: 2px solid #315ee8;
+}
+
+#gradesTable {
+    background-color: #ffffff;
+    alternate-background-color: #f7f9fd;
+    border: none;
+    gridline-color: #edf0f5;
+    selection-background-color: #e3ebff;
+    selection-color: #17233c;
+}
+
+#gradesTable QHeaderView::section {
+    padding: 12px 10px;
+    background-color: #f1f4fa;
+    border: none;
+    border-bottom: 1px solid #e1e7f0;
+    color: #53627a;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#gradesTable::item {
+    padding: 5px;
+    border-bottom: 1px solid #edf0f5;
+}
